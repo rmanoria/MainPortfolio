@@ -793,25 +793,26 @@
         <div class="form-row">
           <div class="form-field">
             <label>Name</label>
-            <input type="text" placeholder="John Doe">
+            <input id="cf-name" type="text" placeholder="John Doe">
           </div>
           <div class="form-field">
             <label>Email</label>
-            <input type="email" placeholder="john@example.com">
+            <input id="cf-email" type="email" placeholder="john@example.com">
           </div>
         </div>
         <div class="form-field">
           <label>Subject</label>
-          <input type="text" placeholder="Internship opportunity">
+          <input id="cf-subject" type="text" placeholder="Internship opportunity">
         </div>
         <div class="form-field">
           <label>Message</label>
-          <textarea rows="5" placeholder="Tell me about your project or opportunity…"></textarea>
+          <textarea id="cf-message" rows="5" placeholder="Tell me about your project or opportunity…"></textarea>
         </div>
-        <button class="btn-send">
+        <button id="cf-submit" class="btn-send">
           <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
           Send message
         </button>
+        <p id="cf-status" style="font-family:var(--font-mono);font-size:0.82rem;margin-top:0.8rem;min-height:1.2rem;"></p>
       </div>
     </div>
   </section>
@@ -821,6 +822,55 @@
     <span>© 2025 Akinwale Emmanuel Morakinyo</span>
     <span>Built with HTML, CSS & vanilla JS · <a href="https://github.com/rmanoria">GitHub</a></span>
   </footer>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    emailjs.init('mCRlGYT9usT0ODoR4');
+
+    document.getElementById('cf-submit').addEventListener('click', function() {
+      const name    = document.getElementById('cf-name').value.trim();
+      const email   = document.getElementById('cf-email').value.trim();
+      const subject = document.getElementById('cf-subject').value.trim();
+      const message = document.getElementById('cf-message').value.trim();
+      const status  = document.getElementById('cf-status');
+      const btn     = document.getElementById('cf-submit');
+
+      if (!name || !email || !subject || !message) {
+        status.style.color = '#f87171';
+        status.textContent = 'Please fill in all fields.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+      status.style.color = 'var(--text-muted)';
+      status.textContent = 'Sending…';
+
+      emailjs.send('service_0e4oa9c', '3LyWYGXKovuiyJy9IAOvE', {
+        name: name,
+        email: email,
+        subject: subject,
+        message: message,
+        title: subject
+      }).then(() => {
+        status.style.color = '#4ade80';
+        status.textContent = '✓ Message sent! I\'ll get back to you soon.';
+        document.getElementById('cf-name').value = '';
+        document.getElementById('cf-email').value = '';
+        document.getElementById('cf-subject').value = '';
+        document.getElementById('cf-message').value = '';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+      }).catch((err) => {
+        status.style.color = '#f87171';
+        status.textContent = '✕ Something went wrong. Try emailing me directly.';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        console.error(err);
+      });
+    });
+  </script>
 
   <script>
     // ── Custom cursor ──
