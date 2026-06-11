@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Akinwale Emmanuel — Software Engineer</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='4' y='4' width='92' height='92' rx='2' stroke='%23A855F7' stroke-width='3' fill='%230A0A0F'/><polygon points='22,82 36,18 43,18 30,82' fill='%23A855F7'/><polygon points='57,82 71,18 78,18 65,82' fill='%23A855F7'/><rect x='32' y='55' width='36' height='8' fill='%23A855F7'/><rect x='54' y='18' width='30' height='8' fill='white'/><rect x='54' y='51' width='25' height='8' fill='white'/><rect x='54' y='74' width='30' height='8' fill='white'/><rect x='54' y='18' width='8' height='64' fill='white'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -39,6 +40,7 @@
     }
     body.light #hero-canvas { opacity: 0.2; }
     body.light .nav-logo { color: var(--accent); }
+    body.light .nav-logo svg [fill="white"] { fill: #0A0A0F; }
     body.light nav.scrolled { background: rgba(248,247,255,0.9); border-bottom: 1px solid var(--border); }
     body.light .project-card { box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
     body.light .form-field input,
@@ -95,9 +97,10 @@
       border-bottom: 1px solid var(--border);
     }
     .nav-logo {
-      font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent);
-      letter-spacing: 0.1em;
+      display: flex; align-items: center;
+      transition: transform 0.2s, opacity 0.2s;
     }
+    .nav-logo:hover { transform: scale(1.08); opacity: 0.85; }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
     .nav-links a {
       font-family: var(--font-body); font-size: 0.85rem; font-weight: 500;
@@ -515,7 +518,31 @@
 
   <!-- Navbar -->
   <nav id="navbar">
-    <div class="nav-logo">EM_DEV</div>
+    <div class="nav-logo">
+      <svg width="36" height="36" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer frame -->
+        <rect x="4" y="4" width="92" height="92" rx="2" stroke="#A855F7" stroke-width="3"/>
+        <!-- Corner brackets -->
+        <polyline points="4,22 4,4 22,4" fill="none" stroke="#A855F7" stroke-width="3" stroke-linecap="square"/>
+        <polyline points="78,4 96,4 96,22" fill="none" stroke="#A855F7" stroke-width="3" stroke-linecap="square"/>
+        <polyline points="4,78 4,96 22,96" fill="none" stroke="#A855F7" stroke-width="3" stroke-linecap="square"/>
+        <polyline points="96,78 96,96 78,96" fill="none" stroke="#A855F7" stroke-width="3" stroke-linecap="square"/>
+        <!-- A left diagonal -->
+        <polygon points="22,82 36,18 43,18 30,82" fill="#A855F7"/>
+        <!-- A right diagonal -->
+        <polygon points="57,82 71,18 78,18 65,82" fill="#A855F7"/>
+        <!-- A crossbar -->
+        <rect x="32" y="55" width="36" height="8" fill="#A855F7"/>
+        <!-- E top bar -->
+        <rect x="54" y="18" width="30" height="8" fill="white"/>
+        <!-- E middle bar -->
+        <rect x="54" y="51" width="25" height="8" fill="white"/>
+        <!-- E bottom bar -->
+        <rect x="54" y="74" width="30" height="8" fill="white"/>
+        <!-- E spine -->
+        <rect x="54" y="18" width="8" height="64" fill="white"/>
+      </svg>
+    </div>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Projects</a></li>
