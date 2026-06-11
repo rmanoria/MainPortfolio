@@ -15,9 +15,9 @@
       --bg: #0A0A0F;
       --bg-2: #111118;
       --bg-card: #15151E;
-      --accent: #00F5D4;
-      --accent-dim: rgba(0, 245, 212, 0.12);
-      --accent-glow: rgba(0, 245, 212, 0.35);
+      --accent: #A855F7;
+      --accent-dim: rgba(168, 85, 247, 0.12);
+      --accent-glow: rgba(168, 85, 247, 0.35);
       --text: #F0F0F5;
       --text-muted: #8888A0;
       --border: rgba(255,255,255,0.07);
@@ -28,12 +28,29 @@
 
     html { scroll-behavior: smooth; }
 
+    /* ── Light mode overrides ── */
+    body.light {
+      --bg: #F8F7FF;
+      --bg-2: #EFEFFF;
+      --bg-card: #FFFFFF;
+      --text: #0A0A0F;
+      --text-muted: #5A5A7A;
+      --border: rgba(0,0,0,0.08);
+    }
+    body.light #hero-canvas { opacity: 0.2; }
+    body.light .nav-logo { color: var(--accent); }
+    body.light nav.scrolled { background: rgba(248,247,255,0.9); border-bottom: 1px solid var(--border); }
+    body.light .project-card { box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+    body.light .form-field input,
+    body.light .form-field textarea { background: #F0EFFF; border-color: rgba(168,85,247,0.2); }
+
     body {
       background: var(--bg);
       color: var(--text);
       font-family: var(--font-body);
       overflow-x: hidden;
       cursor: none;
+      transition: background 0.4s, color 0.4s;
     }
 
     /* ── Custom cursor ── */
@@ -239,7 +256,7 @@
     .about-tag {
       font-family: var(--font-mono); font-size: 0.78rem;
       color: var(--accent); background: var(--accent-dim);
-      border: 1px solid rgba(0, 245, 212, 0.2);
+      border: 1px solid rgba(168, 85, 247, 0.2);
       padding: 0.3rem 0.9rem; border-radius: 3px;
     }
 
@@ -293,7 +310,7 @@
       transform: scaleX(0); transform-origin: left;
       transition: transform 0.4s ease;
     }
-    .project-card:hover { border-color: rgba(0, 245, 212, 0.3); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    .project-card:hover { border-color: rgba(168, 85, 247, 0.3); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
     .project-card:hover::before { transform: scaleX(1); }
 
     .project-num {
@@ -364,7 +381,7 @@
     .contact-item a:hover { color: var(--accent); }
     .contact-icon {
       width: 36px; height: 36px; border-radius: 6px;
-      background: var(--accent-dim); border: 1px solid rgba(0,245,212,0.2);
+      background: var(--accent-dim); border: 1px solid rgba(168,85,247,0.2);
       display: flex; align-items: center; justify-content: center;
       color: var(--accent); flex-shrink: 0;
     }
@@ -429,6 +446,22 @@
       .form-row { grid-template-columns: 1fr; }
     }
 
+    /* ── Theme toggle ── */
+    #theme-toggle {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 500;
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--accent); cursor: none;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+    }
+    #theme-toggle:hover {
+      transform: scale(1.1) rotate(20deg);
+      box-shadow: 0 6px 28px rgba(168,85,247,0.4);
+    }
+    #theme-toggle svg { transition: transform 0.4s; }
+
     /* ── Noise overlay ── */
     body::after {
       content: ''; position: fixed; inset: 0;
@@ -473,6 +506,12 @@
   <!-- Custom Cursor -->
   <div id="cursor"></div>
   <div id="cursor-ring"></div>
+
+  <!-- Theme Toggle -->
+  <button id="theme-toggle" title="Toggle theme">
+    <svg id="icon-moon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    <svg id="icon-sun" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-9h-1M4.34 12h-1m15.07-6.07l-.71.71M6.34 17.66l-.71.71m12.02 0l-.71-.71M6.34 6.34l-.71-.71M12 5a7 7 0 100 14A7 7 0 0012 5z"/></svg>
+  </button>
 
   <!-- Navbar -->
   <nav id="navbar">
@@ -847,7 +886,7 @@
       status.style.color = 'var(--text-muted)';
       status.textContent = 'Sending…';
 
-      emailjs.send('service_0e4oa9c', '3LyWYGXKovuiyJy9IAOvE', {
+      emailjs.send('service_0e4oa9c', 'template_bf9a2sa', {
         name: name,
         email: email,
         subject: subject,
@@ -912,7 +951,7 @@
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0,245,212,${this.alpha})`;
+        ctx.fillStyle = `rgba(168,85,247,${this.alpha})`;
         ctx.fill();
       }
     }
@@ -933,7 +972,7 @@
             ctx.beginPath();
             ctx.moveTo(dots[i].x, dots[i].y);
             ctx.lineTo(dots[j].x, dots[j].y);
-            ctx.strokeStyle = `rgba(0,245,212,${0.08 * (1 - d/100)})`;
+            ctx.strokeStyle = `rgba(168,85,247,${0.08 * (1 - d/100)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -1006,6 +1045,24 @@
       });
     }, { threshold: 0.2 });
     document.querySelectorAll('.timeline-item').forEach(el => tlObs.observe(el));
+
+    // ── Theme toggle ──
+    const themeBtn = document.getElementById('theme-toggle');
+    const iconMoon = document.getElementById('icon-moon');
+    const iconSun  = document.getElementById('icon-sun');
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      document.body.classList.add('light');
+      iconMoon.style.display = 'none';
+      iconSun.style.display = 'block';
+    }
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      const isLight = document.body.classList.contains('light');
+      iconMoon.style.display = isLight ? 'none' : 'block';
+      iconSun.style.display  = isLight ? 'block' : 'none';
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    });
 
     // ── 3D card tilt ──
     document.querySelectorAll('.project-card').forEach(card => {
